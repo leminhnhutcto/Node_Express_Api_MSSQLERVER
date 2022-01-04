@@ -142,11 +142,48 @@ async function getListCard() {
 
 
 
+//getListBank
+async function getListBankCode() {
+    try {
+        let pool = await sql.connect(config);
+        let queryListBank = await pool.request()
+            .query("SELECT * from [BankOperatorsSecondary] WHERE serviceId =1 and status=1");
+
+        return queryListBank.recordsets[0];
+    }
+    catch (error) {
+        console.log(error);
+    }
+
+}
+
+
+async function addMomoHistory(dataMomo) {
+    // sql.connect(config).then(function () {
+    //     var request = new sql.Request();
+    //     request.query(
+    //         "INSERT INTO UserMomoRequest (RequestType, RequestCode, UserID, Amount,ReceivedMoney,Status, PartnerErrorCode, Description, RefKey, RefSendKey,UpdateUser, RequestDate ,UpdateDate)VALUES" +
+    //         "(1," + dataMomo.RequestCode + "," + dataMomo.UserId + "," + dataMomo.Amount + "," + dataMomo.ReceivedMoney + "," + dataMomo.Status + "," + dataMomo.PartnerErrorCode + ", " +
+    //         dataMomo.Description + "," + dataMomo.RefKey + "," + dataMomo.RefSendKey + ",5,GETDATE(),GETDATE())"
+    //     ).then(function (recordset) {
+    //         console.log('Recordset: ' + recordset);
+    //         console.log('Affected: ' + request.rowsAffected);
+    //     }).catch(function (err) {
+    //         console.log('Request error: ' + err);
+    //     });
+    // }).catch(function (err) {
+    //     if (err) {
+    //         console.log('SQL Connection Error: ' + err);
+    //     }
+    // });
+}
+
 module.exports = {
     addMomoRequest: addMomoRequest,
     addBankRequest: addBankRequest,
     updateBalance: updateBalance,
     getUser: getUser,
     updateStatus: updateStatus,
-    getListCard: getListCard
+    getListCard: getListCard,
+    getListBankCode: getListBankCode
 }

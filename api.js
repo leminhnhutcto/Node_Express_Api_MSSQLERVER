@@ -228,7 +228,7 @@ app.route('/resRechagreCard').post((request, response) => {
 
 app.route('/GetListCard').get((request, res) => {
    let dataResponse;
-   dboperations.getListCard('G63').then(result => {
+   dboperations.getListCard().then(result => {
       dataResponse={
          ResponseCode:1,
          list: result
@@ -239,6 +239,35 @@ app.route('/GetListCard').get((request, res) => {
    
 })
 
+
+
+app.route('/getListBankCode').post((request, response) => {
+   let dataResponse;
+   dboperations.getListBankCode().then(result => {
+      console.log('dataResponse',result);
+      dataResponse={
+         ResponseCode:1,
+         stt:1,
+         msg:'OK',
+         Data: result
+      }
+      response.send(dataResponse);
+   });
+})
+
+
+app.route('/rutMomo').post((request, response) => {
+   let dataResponse;
+   dboperations.addMomoHistory(request.body).then(result => {
+      console.log('dataResponse',result);
+      dataResponse={
+         ResponseCode:1,
+         stt:1,
+         msg:'Thành Công',
+      }
+      response.send(dataResponse);
+   });
+})
 
 
 
