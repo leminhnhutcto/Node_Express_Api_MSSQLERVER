@@ -2,22 +2,25 @@
   "name": "nodejsapi",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "api.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
     "start": "nodemon api.js"
   },
   "dependencies": {
+    "axios": "^0.24.0",
+    "axios-https-proxy-fix": "^0.17.1",
     "body-parser": "~1.0.1",
     "cors": "2.8.1",
+    "dateformat": "^5.0.2",
     "express": "~4.0.0",
+    "form-data": "^4.0.0",
+    "md5": "^2.3.0",
+    "moment": "^2.29.1",
     "mssql": "^6.2.1",
+    "request": "^2.88.2",
     "tedious": "^14.0.0"
   },
   "devDependencies": {
     "nodemon": "^2.0.4"
-  },
-  "keywords": [],
-  "author": "Dhananjay Kumar <debugmode@outlook.com> (https://debugmode.net)",
-  "license": "ISC"
+  }
 }
