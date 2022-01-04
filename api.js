@@ -11,18 +11,20 @@ const cors = require('cors');
 const app = express();
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
+var corsOptions = {
+   origin: 'https://skybet79.fun',
+   optionsSuccessStatus: 200 // For legacy browser support
+}
 
-// app.use(cors({
-//    credentials: true,
-//    origin: 'http://localhost:7456',
-//    'Access-Control-Allow-Origin': 'http://localhost:7456',
-// }));
+app.use(cors(corsOptions));
 
 // app.use(cors({ credentials: true, origin: 'http://localhost:7456', 'Access-Control-Allow-Origin': '*' }));
 app.use(function (req, res, next) {
 
    // Website you wish to allow to connect
-   res.setHeader('Access-Control-Allow-Origin', 'http://localhost:7456');
+   ["https://skybet79.fun", "http://skybet79.fun","http://localhost:7456","https://recharge.skybet79.fun"].map(domain => {
+      res.setHeader("Access-Control-Allow-Origin", domain);
+   });
 
    // Request methods you wish to allow
    res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
@@ -32,7 +34,7 @@ app.use(function (req, res, next) {
 
    // Set to true if you need the website to include cookies in the requests sent
    // to the API (e.g. in case you use sessions)
-   res.setHeader('Access-Control-Allow-Credentials', true);
+   res.setHeader('Access-Control-Allow-Credentials', 'true');
 
    // Pass to next layer of middleware
    next();
@@ -102,6 +104,8 @@ app.route('/chargeRegister').post(async (req, res) => {
                      List: amount
                   }
                };
+               res.setHeader('Access-Control-Allow-Credentials', 'true');
+               res.setHeader("Access-Control-Allow-Origin", '*');
                res.send(dataSend);
             })
          }
@@ -139,6 +143,8 @@ app.route('/chargeRegister').post(async (req, res) => {
                      }
                   }
                }
+               res.setHeader('Access-Control-Allow-Credentials', 'true');
+               res.setHeader("Access-Control-Allow-Origin", '*');
                res.send(dataSend);
             })
 
@@ -210,6 +216,8 @@ app.route('/cardRegister').post(async (req, res) => {
    }
 
    console.log(req.body);
+   res.setHeader('Access-Control-Allow-Credentials', 'true');
+   res.setHeader("Access-Control-Allow-Origin", '*');
    res.send('OK');
 
 })
@@ -229,14 +237,16 @@ app.route('/resRechagreCard').post((request, response) => {
 app.route('/GetListCard').get((request, res) => {
    let dataResponse;
    dboperations.getListCard().then(result => {
-      dataResponse={
-         ResponseCode:1,
+      dataResponse = {
+         ResponseCode: 1,
          list: result
       }
+      res.setHeader('Access-Control-Allow-Credentials', 'true');
+      res.setHeader("Access-Control-Allow-Origin", '*');
       res.send(dataResponse);
    });
 
-   
+
 })
 
 
@@ -244,13 +254,15 @@ app.route('/GetListCard').get((request, res) => {
 app.route('/getListBankCode').post((request, response) => {
    let dataResponse;
    dboperations.getListBankCode().then(result => {
-      console.log('dataResponse',result);
-      dataResponse={
-         ResponseCode:1,
-         stt:1,
-         msg:'OK',
+      console.log('dataResponse', result);
+      dataResponse = {
+         ResponseCode: 1,
+         stt: 1,
+         msg: 'OK',
          Data: result
       }
+      response.setHeader('Access-Control-Allow-Credentials', 'true');
+      response.setHeader("Access-Control-Allow-Origin", '*');
       response.send(dataResponse);
    });
 })
@@ -259,15 +271,22 @@ app.route('/getListBankCode').post((request, response) => {
 app.route('/rutMomo').post((request, response) => {
    let dataResponse;
    dboperations.addMomoHistory(request.body).then(result => {
-      console.log('dataResponse',result);
-      dataResponse={
-         ResponseCode:1,
-         stt:1,
-         msg:'Thành Công',
+      console.log('dataResponse', result);
+      dataResponse = {
+         ResponseCode: 1,
+         stt: 1,
+         msg: 'Thành Công',
       }
       response.send(dataResponse);
    });
 })
+
+
+app.route('/testconnect').get((request, response) => {
+   console.log('testconnect');
+   response.send("Connect Success");
+})
+
 
 
 
@@ -275,6 +294,4 @@ app.route('/rutMomo').post((request, response) => {
 const port = process.env.PORT || 8090;
 app.listen(port);
 console.log('Order API is runnning at ' + port);
-
-
 
